@@ -1,5 +1,7 @@
-from encode import payloadencode
+from core.boolean_payload import boolean_payload
 
 
 
-print(len(payloadencode.getTestDataClass()))
+
+
+boolean_payload()

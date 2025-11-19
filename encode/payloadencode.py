@@ -1,9 +1,7 @@
 import pathlib
-
 from lxml import etree
-
 from dataModel.testmodel import testData
-
+from dataModel.boundmodel import BoundModel
 
 def safe_find_text(element: etree._Element, tag_name: str, default=None) -> str | None:
     """安全地查找标签并获取文本内容"""
@@ -29,14 +27,13 @@ def format_clause(data: str) -> list:
     return data
 
 
-def getTestDataClass() -> list[testData]:
+def getTestDataClass(path:str) -> list[testData]:
     """
     获取全部的test的类的表示方式
     :return:
     """
     parser = etree.XMLParser(encoding="utf-8")
-    path = pathlib.Path('data') / 'xml' / 'boolean_blind.xml'
-    tree = etree.parse(path, parser=parser)  #查看解析出的tree的内容
+    tree = etree.parse(path, parser=parser)  # 查看解析出的tree的内容
     root = tree.getroot()
     tests = root.findall('test')
     tests_class = []
@@ -71,3 +68,23 @@ def getTestDataClass() -> list[testData]:
                                     dbms=details_dbms, dbms_version=details_dbms_version,
                                     os=details_os))
     return tests_class
+
+def getBoundaryClass(path:str)->list[BoundModel]:
+    """
+    获取全部模版类
+    """
+    parser = etree.XMLParser(encoding="utf-8")
+    tree = etree.parse(path, parser=parser)  # 查看解析出的tree的内容
+    root = tree.getroot()
+    boundaries = root.findall('boundary')
+    boundaries_class = []
+    for boundary in boundaries:
+        level = safe_find_text(boundary, 'level')
+        clause = format_clause(safe_find_text(boundary, 'clause'))
+        where = format_clause(safe_find_text(boundary, 'where'))
+        ptype = safe_find_text(boundary, 'ptype')
+        prefix = safe_find_text(boundary, 'prefix')
+        suffix = safe_find_text(boundary, 'suffix')
+        boundaries_class.append(BoundModel(level=level, clause=clause, where=where,
+                                           ptype=ptype, prefix=prefix, suffix=suffix))
+    return boundaries_class
