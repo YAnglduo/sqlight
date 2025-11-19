@@ -1,32 +1,8 @@
-from dataclasses import dataclass
-
-from lxml import etree
 import pathlib
 
+from lxml import etree
 
-@dataclass
-class testData:
-    """
-    test的数据类
-    """
-    title: str #标题
-    stype: str 
-    level: str
-    risk: str
-    clause: list
-    where: list
-    vector: str
-    payload: str
-    comment: str
-    char: str
-    columns: str
-    comparison: str
-    grep: str
-    time: str
-    union: str
-    dbms: str
-    dbms_version: str
-    os: str
+from dataModel.testmodel import testData
 
 
 def safe_find_text(element: etree._Element, tag_name: str, default=None) -> str | None:
@@ -95,7 +71,3 @@ def getTestDataClass() -> list[testData]:
                                     dbms=details_dbms, dbms_version=details_dbms_version,
                                     os=details_os))
     return tests_class
-
-
-print(len(getTestDataClass()))
-
