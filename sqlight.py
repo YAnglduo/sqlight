@@ -1,7 +1,7 @@
-from core.boolean_payload import boolean_payload
+from core.boolean_payload import booleanPayload
+from util.randomvalue import randomNumber
+
+# print(randomNumber())
 
 
-
-
-
-boolean_payload()
+booleanPayload()

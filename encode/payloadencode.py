@@ -1,7 +1,7 @@
-import pathlib
 from lxml import etree
 from dataModel.testmodel import testData
 from dataModel.boundmodel import BoundModel
+
 
 def safe_find_text(element: etree._Element, tag_name: str, default=None) -> str | None:
     """安全地查找标签并获取文本内容"""
@@ -27,7 +27,7 @@ def format_clause(data: str) -> list:
     return data
 
 
-def getTestDataClass(path:str) -> list[testData]:
+def getTestDataClass(path: str) -> list[testData]:
     """
     获取全部的test的类的表示方式
     :return:
@@ -69,7 +69,8 @@ def getTestDataClass(path:str) -> list[testData]:
                                     os=details_os))
     return tests_class
 
-def getBoundaryClass(path:str)->list[BoundModel]:
+
+def getBoundaryClass(path: str) -> list[BoundModel]:
     """
     获取全部模版类
     """
